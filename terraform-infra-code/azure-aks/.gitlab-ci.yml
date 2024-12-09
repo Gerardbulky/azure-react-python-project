@@ -1,0 +1,64 @@
+   
+variables:
+  TF_IN_AUTOMATION: "true"
+  TF_ROOT: ${CI_PROJECT_DIR}
+  ENV: variables
+  TERRAFORM_ACTION: apply
+
+
+before_script:
+  - apt-get update && apt-get install -y wget unzip
+  - wget https://releases.hashicorp.com/terraform/1.5.0/terraform_1.5.0_linux_amd64.zip
+  - unzip terraform_1.5.0_linux_amd64.zip
+  - sudo mv terraform /usr/local/bin/
+  - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  - terraform --version
+  - terraform init
+
+stages:
+  - validate
+  - plan
+  - action
+
+Validating the Terraform Configuration:
+  stage: validate
+  tags:
+    - aks
+  script:
+    - terraform validate
+  
+
+Running the Plan:
+  stage: plan
+  tags:
+    - aks
+  script:
+    - terraform plan -var="role_id=$VAULT_ROLE_ID" -var="secret_id=$VAULT_SECRET_ID" -var-file="$ENV.tfvars"
+
+Running the Apply:
+  stage: action
+  tags:
+    - aks
+  script:
+    - if [[ "$TERRAFORM_ACTION" == "apply" ]]; then
+        terraform apply -var="role_id=${VAULT_ROLE_ID}" -var="secret_id=${VAULT_SECRET_ID}" -auto-approve -var-file=$ENV.tfvars;
+      fi
+  when: manual
+
+  only:
+    variables:
+      - $TERRAFORM_ACTION == "apply"
+
+Running the Destroy:
+  stage: action
+  tags:
+    - aks
+  script:
+    - if [[ "$TERRAFORM_ACTION" == "destroy" ]]; then
+        terraform destroy -var="role_id=${VAULT_ROLE_ID}" -var="secret_id=${VAULT_SECRET_ID}" -auto-approve -var-file=$ENV.tfvars;
+      fi
+  when: manual
+  
+  only:
+    variables:
+      - $TERRAFORM_ACTION == "destroy"

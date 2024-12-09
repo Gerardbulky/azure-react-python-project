@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+ name: letsencrypt
+spec:
+ acme:
+   server: https://acme-v02.api.letsencrypt.org/directory
+   email: bigbossy125@gmail.com # You must replace this email address with your own. Let's Encrypt will use this to contact you about expiring certificates, and issues related to your account.
+   privateKeySecretRef:
+     name: letsencrypt  # This is the name of the secret that will be created in the same namespace as the ClusterIssuer. This secret will contain the ACME account private key.
+   solvers:
+   - http01:
+       ingress:
+         class: nginx
+         podTemplate:
+           spec:
+             nodeSelector:
+               "kubernetes.io/os": linux

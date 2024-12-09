@@ -1,0 +1,4 @@
+# # # 
+.terraform*
+aman_vm
+*.variables.tfvars

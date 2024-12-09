@@ -1,0 +1,41 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingresslb
+  namespace: three-tier
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - app.nilssonsstadtjanst.se
+    secretName: tls-secret
+  rules:
+    - host: app.nilssonsstadtjanst.se
+      http:
+        paths:
+          - path: /users
+            pathType: Prefix  
+            backend:
+              service:
+                name: api
+                port:   
+                  number: 5000   # 5000
+          - path: /user
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port:
+                  number: 5000   # 5000
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port: 
+                  number: 5173   # 5173
+      

@@ -1,0 +1,8 @@
+rs-group-name = "Three-Tier-K8s-RG"
+location      = "East US"
+ssh_key       = "./aks_vm.pub"
+cluster-name  = "Three-Tier-K8s-Cluster"
+acr-name      = "frontendaman8765"
+acr-name2     = "backendaman34567"
+# role_id   = "${VAULT_ROLE_ID}"
+# secret_id = "${VAULT_SECRET_ID}"
