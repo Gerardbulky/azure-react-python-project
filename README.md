@@ -1,4 +1,5 @@
 ## Project Overview: Azure DevOps with Kubernetes Deployment
+![Graphical Illustration](./source-code/frontend/public/graphical-illustration.png)
 
 ### Introduction
 Welcome to the Azure DevOps with Kubernetes Deployment project! This repository contains the infrastructure code, Kubernetes manifests, and application source code required to build a reliable DevOps pipeline and deploy applications to a Kubernetes cluster hosted on Azure.
@@ -14,21 +15,22 @@ Our project simplifies the deployment process by integrating key tools and techn
 With the resources and guidance provided, you can set up a fully automated CI/CD pipeline and effortlessly deploy applications to a Kubernetes cluster.
 
 ### Directory Structure
+![Graphical Illustration](./source-code/frontend/public/projects-hierachy.png)
 #### Terraform-code-infra
-- **azure-aks**: Terraform scripts for provisioning an Azure AKS cluster.
-- **azure-gitlab-vm**: Terraform scripts for creating a GitLab VM on Azure.
-- **azure-hashicorp-vault-vm**: Terraform scripts for creating a GitLab VM on Azure.
+- **Azure-aks**: Terraform scripts for provisioning an Azure AKS cluster.
+- **Gitlab-vm**: Terraform scripts for creating a GitLab VM on Azure.
+- **Hashicorp-vault-vm**: Terraform scripts for creating a GitLab VM on Azure.
 
 #### Kubernetes-Manifests
-- **flux-config**: Configuration files for FluxCD, enabling GitOps practices.
-- **manifests**: 
+- **Flux-config**: Configuration files for FluxCD, enabling GitOps practices.
+- **Manifests**: 
     - **Backend**: Kubernetes manifests for backend application deployment.
     - **Database**: Kubernetes manifests for database deployment (e.g., stateful sets, services) 
     - **Frontend**: Kubernetes manifests for frontend application deployment.
 
-  #### Terraform-code-infra
-- **backend**: Source code and Dockerfile for the backend application.
-- **frontend**: Source code and Dockerfile for the frontend application.
+#### Terraform-code-infra
+- **Backend**: Source code and Dockerfile for the backend application.
+- **Frontend**: Source code and Dockerfile for the frontend application.
 
 ## Getting Started
     ```bash
